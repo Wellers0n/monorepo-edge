@@ -4,5 +4,18 @@
   "main": "index.js",
   "author": "wellerson",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "dev": "yarn dev:server & yarn dev:client",
+    "dev:client": "yarn workspace @/client run dev",
+    "dev:server": "yarn workspace @/server run start:dev",
+    "test:client": "yarn workspace @/client run test",
+    "test:server": "yarn workspace @/server run test"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/client",
+      "packages/server"
+    ]
+  }
 }
