@@ -12,9 +12,9 @@ datasource db {
 
 model User {
   id          Int          @id @default(autoincrement())
-  email       String
+  email       String       @db.VarChar(140)
   password    String
-  name        String
+  name        String       @db.VarChar(140)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   receivables Receivable[]
@@ -24,13 +24,14 @@ model User {
 }
 
 model Assignor {
-  id           Int          @id @default(autoincrement())
-  value        Float
-  valueInCents Int
-  emissionDate DateTime
-  user         User         @relation(fields: [userId], references: [id])
-  userId       Int
-  receivables  Receivable[]
+  id          Int          @id @default(autoincrement())
+  document    String       @db.VarChar(30)
+  email       String       @db.VarChar(140)
+  phone       String       @db.VarChar(20)
+  name        String       @db.VarChar(140)
+  user        User         @relation(fields: [userId], references: [id])
+  userId      Int
+  receivables Receivable[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

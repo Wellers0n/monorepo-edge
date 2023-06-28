@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
-    "email" TEXT NOT NULL,
+    "email" VARCHAR(140) NOT NULL,
     "password" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" VARCHAR(140) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -13,9 +13,10 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "assignors" (
     "id" SERIAL NOT NULL,
-    "value" DOUBLE PRECISION NOT NULL,
-    "valueInCents" INTEGER NOT NULL,
-    "emissionDate" TIMESTAMP(3) NOT NULL,
+    "document" VARCHAR(30) NOT NULL,
+    "email" VARCHAR(140) NOT NULL,
+    "phone" VARCHAR(20) NOT NULL,
+    "name" VARCHAR(140) NOT NULL,
     "userId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
