@@ -25,7 +25,7 @@ CREATE TABLE "assignors" (
 );
 
 -- CreateTable
-CREATE TABLE "receivables" (
+CREATE TABLE "payables" (
     "id" SERIAL NOT NULL,
     "value" DOUBLE PRECISION NOT NULL,
     "valueInCents" INTEGER NOT NULL,
@@ -35,14 +35,14 @@ CREATE TABLE "receivables" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "receivables_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "payables_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
 ALTER TABLE "assignors" ADD CONSTRAINT "assignors_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "receivables" ADD CONSTRAINT "receivables_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "payables" ADD CONSTRAINT "payables_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "receivables" ADD CONSTRAINT "receivables_assignorId_fkey" FOREIGN KEY ("assignorId") REFERENCES "assignors"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "payables" ADD CONSTRAINT "payables_assignorId_fkey" FOREIGN KEY ("assignorId") REFERENCES "assignors"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

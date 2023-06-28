@@ -11,27 +11,27 @@ datasource db {
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
-  email       String       @db.VarChar(140)
-  password    String
-  name        String       @db.VarChar(140)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  receivables Receivable[]
-  assignors   Assignor[]
+  id        Int        @id @default(autoincrement())
+  email     String     @db.VarChar(140)
+  password  String
+  name      String     @db.VarChar(140)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  payables  Payable[]
+  assignors Assignor[]
 
   @@map("users")
 }
 
 model Assignor {
-  id          Int          @id @default(autoincrement())
-  document    String       @db.VarChar(30)
-  email       String       @db.VarChar(140)
-  phone       String       @db.VarChar(20)
-  name        String       @db.VarChar(140)
-  user        User         @relation(fields: [userId], references: [id])
-  userId      Int
-  receivables Receivable[]
+  id       Int       @id @default(autoincrement())
+  document String    @db.VarChar(30)
+  email    String    @db.VarChar(140)
+  phone    String    @db.VarChar(20)
+  name     String    @db.VarChar(140)
+  user     User      @relation(fields: [userId], references: [id])
+  userId   Int
+  payables Payable[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -39,7 +39,7 @@ model Assignor {
   @@map("assignors")
 }
 
-model Receivable {
+model Payable {
   id           Int      @id @default(autoincrement())
   value        Float
   valueInCents Int
@@ -48,8 +48,9 @@ model Receivable {
   userId       Int
   assignor     Assignor @relation(fields: [assignorId], references: [id])
   assignorId   Int
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
 
-  @@map("receivables")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("payables")
 }
