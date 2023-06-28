@@ -9,6 +9,10 @@ export class UserOkResponse {
   email: string;
   @ApiProperty()
   password: string;
+  @ApiProperty()
+  createdAt: string;
+  @ApiProperty()
+  updatedAt: string;
 }
 
 export class UserUnauthorizedResponse {
