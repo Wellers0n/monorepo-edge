@@ -25,9 +25,9 @@ export class AssignorsService {
     return this.assignorsRepository.findOne(id);
   }
 
-  async find(data: FindAssignorDataDTO) {
+  async findAll(data: FindAssignorDataDTO) {
     const { email, name, phone, document } = data;
-    return this.assignorsRepository.find({ email, name, phone, document });
+    return this.assignorsRepository.findAll({ email, name, phone, document });
   }
 
   async update(data: UpdateAssignorDataDTO) {

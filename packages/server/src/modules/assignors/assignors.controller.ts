@@ -65,9 +65,9 @@ export class AssignorsController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: [AssignorOkResponse] })
   @ApiUnauthorizedResponse({ type: AssignorUnauthorizedResponse })
-  findByEmail(@Query() query: FindAssignorDataDTO): Promise<AssignorEntity[]> {
+  findAll(@Query() query: FindAssignorDataDTO): Promise<AssignorEntity[]> {
     const { email, name, phone, document } = query;
-    return this.assignorsService.find({ email, name, phone, document });
+    return this.assignorsService.findAll({ email, name, phone, document });
   }
 
   @Get(':id')
