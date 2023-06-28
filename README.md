@@ -37,7 +37,7 @@ yarn
 
 ## Avoid conflict
 
-- WARNIGN: If starting the application with docker-compose, avoid conflicts
+- WARNIGN: avoid conflicts with docker-compose
 
 #### Mac
 
