@@ -8,8 +8,16 @@ export class FindPayableQueryDTO {
   @IsOptional()
   @IsNotEmpty()
   emissionDate: Date;
+
+  @ApiProperty({
+    required: false,
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  assignorId: number;
 }
 
 export class FindPayableDataDTO {
   emissionDate: Date;
+  assignorId: number;
 }
