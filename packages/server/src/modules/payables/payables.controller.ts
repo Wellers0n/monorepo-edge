@@ -77,9 +77,7 @@ export class PayablesController {
   ): Promise<PayableEntity[]> {
     const { emissionDate } = query;
 
-    const userId = request.user.id;
-
-    return this.payablesService.findAll({ emissionDate, userId });
+    return this.payablesService.findAll({ emissionDate });
   }
 
   @Get(':id')

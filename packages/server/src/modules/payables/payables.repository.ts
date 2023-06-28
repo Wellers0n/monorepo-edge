@@ -29,10 +29,9 @@ export class PayablesRepository {
   }
 
   async findAll(data: FindPayableDataDTO): Promise<PayableEntity[]> {
-    const { userId, emissionDate } = data;
+    const { emissionDate } = data;
     return this.prisma.payable.findMany({
       where: {
-        userId,
         emissionDate,
       },
     });
@@ -42,7 +41,6 @@ export class PayablesRepository {
     return this.prisma.payable.findFirst({
       where: {
         id,
-        userId,
       },
     });
   }
