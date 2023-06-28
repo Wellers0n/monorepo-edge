@@ -95,7 +95,7 @@ Visit [http://localhost:3001/docs/](http://localhost:3001/api/) for more informa
 
 ## Stack used
 
-[ReactJS](https://reactjs.org/)<br/>
+[NextJS](https://nextjs.org/)<br/>
 [NestJS](https://nestjs.com/)<br/>
 [Postgresql](https://www.postgresql.org/)<br/>
 [Docker](https://www.docker.com/)<br/>
