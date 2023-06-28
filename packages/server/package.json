@@ -31,6 +31,7 @@
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "moment": "^2.29.4",
     "pg": "^8.11.1",
     "prisma": "^4.16.1",
     "reflect-metadata": "^0.1.13",
