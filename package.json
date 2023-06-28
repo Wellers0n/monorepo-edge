@@ -5,6 +5,9 @@
   "author": "wellerson",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "dev": "yarn dev:server & yarn dev:client",
     "dev:client": "yarn workspace @monorepo-edge/client run dev",
