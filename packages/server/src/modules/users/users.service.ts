@@ -25,9 +25,9 @@ export class UsersService {
     return this.userRepository.findByEmail(email);
   }
 
-  async find(data: FindUserDataDTO) {
+  async findAll(data: FindUserDataDTO) {
     const { email, name } = data;
-    return this.userRepository.find(email, name);
+    return this.userRepository.findAll(email, name);
   }
 
   async update(data: UpdateUserDataDTO) {

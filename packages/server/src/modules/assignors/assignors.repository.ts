@@ -34,7 +34,7 @@ export class AssignorsRepository {
     });
   }
 
-  async find(data: FindAssignorDataDTO): Promise<AssignorEntity[]> {
+  async findAll(data: FindAssignorDataDTO): Promise<AssignorEntity[]> {
     const { email, name, phone, document } = data;
     return this.prisma.assignor.findMany({
       where: {

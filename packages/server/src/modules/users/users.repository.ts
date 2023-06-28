@@ -29,7 +29,7 @@ export class UserRepository {
     });
   }
 
-  async find(email: string, name: string): Promise<UserEntity[]> {
+  async findAll(email: string, name: string): Promise<UserEntity[]> {
     return this.prisma.user.findMany({
       where: {
         email: {

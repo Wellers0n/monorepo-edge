@@ -52,7 +52,7 @@ export class UsersController {
   @ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
   findByEmail(@Query() query: FindUserQueryDTO): Promise<UserEntity[]> {
     const { email, name } = query;
-    return this.usersService.find({ email, name });
+    return this.usersService.findAll({ email, name });
   }
 
   @Get(':id')
