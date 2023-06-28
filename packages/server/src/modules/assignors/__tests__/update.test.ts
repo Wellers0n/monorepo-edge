@@ -53,7 +53,7 @@ describe('Assignors (e2e)', () => {
     expect(response.body.message).toBe('Unauthorized');
   });
 
-  it('/assignors/:id (PUT) update user', async () => {
+  it('/assignors/:id (PUT) update assignor', async () => {
     const responseUser = await request(app.getHttpServer())
       .get('/assignors/1')
       .set('Authorization', `Bearer ${token}`);
