@@ -33,6 +33,7 @@ import { DeleteUserParamDTO } from './dtos/delete-user.dto';
 @Controller('users')
 @ApiTags('Users')
 @ApiBearerAuth()
+@UseGuards(AuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -40,7 +41,6 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: UserOkResponse })
   @ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
-  @UseGuards(AuthGuard)
   create(@Body() body: CreateUserBodyDTO): Promise<UserEntity> {
     const { name, email, password } = body;
     return this.usersService.create({ name, email, password });
@@ -50,7 +50,6 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: UserOkResponse })
   @ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
-  @UseGuards(AuthGuard)
   findByEmail(@Query() query: FindUserQueryDTO): Promise<UserEntity[]> {
     const { email, name } = query;
     return this.usersService.find({ email, name });
@@ -60,7 +59,6 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: UserOkResponse })
   @ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
-  @UseGuards(AuthGuard)
   findById(@Param() param: FindOneUserParamDTO): Promise<UserEntity> {
     const { id } = param;
     return this.usersService.findOne({ id: Number(id) });
@@ -70,7 +68,6 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: UserOkResponse })
   @ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
-  @UseGuards(AuthGuard)
   update(
     @Param() param: UpdateUserParamDTO,
     @Body() body: UpdateUserBodyDTO,
@@ -84,7 +81,6 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse()
   @ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
-  @UseGuards(AuthGuard)
   delete(@Param() param: DeleteUserParamDTO): Promise<void> {
     const { id } = param;
     return this.usersService.delete({ id: Number(id) });
