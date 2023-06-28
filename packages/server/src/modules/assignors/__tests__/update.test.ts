@@ -62,7 +62,7 @@ describe('Assignors (e2e)', () => {
     expect(responseUser.body.name).toBe('test');
     expect(responseUser.body.email).toBe('test@admin.com');
 
-    const responseUserUpdated = await request(app.getHttpServer())
+    const responseUpdated = await request(app.getHttpServer())
       .put('/assignors/1')
       .set('Authorization', `Bearer ${token}`)
       .send({
@@ -72,9 +72,9 @@ describe('Assignors (e2e)', () => {
         phone: '22222222222',
       });
 
-    expect(responseUserUpdated.statusCode).toBe(200);
-    expect(responseUserUpdated.body.name).toBe('updated');
-    expect(responseUserUpdated.body.email).toBe('updated@admin.com');
+    expect(responseUpdated.statusCode).toBe(200);
+    expect(responseUpdated.body.name).toBe('updated');
+    expect(responseUpdated.body.email).toBe('updated@admin.com');
   });
 
   it('/assignors/:id (PUT) missing name', async () => {
