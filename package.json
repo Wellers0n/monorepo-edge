@@ -7,10 +7,10 @@
   "private": true,
   "scripts": {
     "dev": "yarn dev:server & yarn dev:client",
-    "dev:client": "yarn workspace @/client run dev",
-    "dev:server": "yarn workspace @/server run start:dev",
-    "test:client": "yarn workspace @/client run test",
-    "test:server": "yarn workspace @/server run test"
+    "dev:client": "yarn workspace @monorepo-edge/client run dev",
+    "dev:server": "yarn workspace @monorepo-edge/server run start:dev",
+    "test:client": "yarn workspace @monorepo-edge/client run test",
+    "test:server": "yarn workspace @monorepo-edge/server run test"
   },
   "workspaces": {
     "packages": [
