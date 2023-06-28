@@ -9,5 +9,4 @@ export class FindOnePayableParamDTO {
 
 export class FindOnePayableDataDTO {
   id: number;
-  userId: number;
 }

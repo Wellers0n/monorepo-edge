@@ -71,27 +71,23 @@ export class PayablesController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: [PayableOkResponse] })
   @ApiUnauthorizedResponse({ type: PayableUnauthorizedResponse })
-  findAll(
-    @Query() query: FindPayableQueryDTO,
-    @Request() request,
-  ): Promise<PayableEntity[]> {
-    const { emissionDate } = query;
+  findAll(@Query() query: FindPayableQueryDTO): Promise<PayableEntity[]> {
+    const { emissionDate, assignorId } = query;
 
-    return this.payablesService.findAll({ emissionDate });
+    return this.payablesService.findAll({
+      emissionDate,
+      assignorId: assignorId ? Number(assignorId) : assignorId,
+    });
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: PayableOkResponse })
   @ApiUnauthorizedResponse({ type: PayableUnauthorizedResponse })
-  findById(
-    @Param() param: FindOnePayableParamDTO,
-    @Request() request,
-  ): Promise<PayableEntity> {
+  findById(@Param() param: FindOnePayableParamDTO): Promise<PayableEntity> {
     const { id } = param;
-    const userId = request.user.id;
 
-    return this.payablesService.findOne({ id: Number(id), userId });
+    return this.payablesService.findOne({ id: Number(id) });
   }
 
   @Put(':id')

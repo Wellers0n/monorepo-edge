@@ -36,6 +36,16 @@ describe('Payables (e2e)', () => {
         phone: '00000000000',
       });
 
+      await request(app.getHttpServer())
+      .post('/assignors/create')
+      .set('Authorization', `Bearer ${response.body.access_token}`)
+      .send({
+        email: 'assignor2@admin.com',
+        name: 'assignor2',
+        document: '00000000000',
+        phone: '00000000000',
+      });
+
     await request(app.getHttpServer())
       .post('/payables/create')
       .set('Authorization', `Bearer ${response.body.access_token}`)
@@ -78,5 +88,23 @@ describe('Payables (e2e)', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveLength(2);
+  });
+
+  it('/payables (GET) filter payables', async () => {
+    await request(app.getHttpServer())
+      .post('/payables/create')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        value: 120,
+        assignorId: 2,
+      });
+
+    const response = await request(app.getHttpServer())
+      .get('/payables')
+      .query({ assignorId: 2 })
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveLength(1);
   });
 });

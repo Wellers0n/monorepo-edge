@@ -21,13 +21,13 @@ export class PayablesService {
     });
   }
   async findOne(data: FindOnePayableDataDTO) {
-    const { id, userId } = data;
-    return this.payablesRepository.findOne({ id, userId });
+    const { id } = data;
+    return this.payablesRepository.findOne({ id });
   }
 
   async findAll(data: FindPayableDataDTO) {
-    const { emissionDate } = data;
-    return this.payablesRepository.findAll({ emissionDate });
+    const { emissionDate, assignorId } = data;
+    return this.payablesRepository.findAll({ emissionDate, assignorId });
   }
 
   async update(data: UpdatePayableDataDTO) {
