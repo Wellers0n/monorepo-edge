@@ -34,8 +34,9 @@ describe('Assignors (e2e)', () => {
       .post('/assignors/create')
       .send({
         email: 'test@admin.com',
-        password: 'admin',
         name: 'test',
+        document: '00000000000',
+        phone: '00000000000',
       });
 
     expect(response.statusCode).toBe(401);
