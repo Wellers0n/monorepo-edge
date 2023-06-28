@@ -12,5 +12,4 @@ export class FindPayableQueryDTO {
 
 export class FindPayableDataDTO {
   emissionDate: Date;
-  userId: number;
 }

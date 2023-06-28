@@ -22,12 +22,12 @@ export class PayablesService {
   }
   async findOne(data: FindOnePayableDataDTO) {
     const { id, userId } = data;
-    return this.payablesRepository.findOne({id, userId});
+    return this.payablesRepository.findOne({ id, userId });
   }
 
   async findAll(data: FindPayableDataDTO) {
-    const { userId, emissionDate } = data;
-    return this.payablesRepository.findAll({ userId, emissionDate });
+    const { emissionDate } = data;
+    return this.payablesRepository.findAll({ emissionDate });
   }
 
   async update(data: UpdatePayableDataDTO) {
