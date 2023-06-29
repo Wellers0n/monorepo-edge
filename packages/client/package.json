@@ -29,6 +29,7 @@
     "eslint-config-next": "13.4.7",
     "jose": "^4.14.4",
     "js-cookie": "^3.0.5",
+    "moment": "^2.29.4",
     "next": "13.4.7",
     "notistack": "^3.0.1",
     "react": "18.2.0",
