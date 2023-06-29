@@ -5,12 +5,9 @@ import {
   Button,
   Stack,
   TextField,
-  AutocompleteRenderInputParams,
   Autocomplete,
   createFilterOptions,
 } from "@mui/material";
-import { PatternFormat } from "react-number-format";
-import { Assignor } from "@/types";
 import useAssignorsData from "@/hooks/useAssignorsData";
 
 type Submit = {
@@ -90,7 +87,7 @@ const CreateFarmModal = (props: CreateFarmModalProps) => {
           name={"assignor"}
           control={control}
           rules={{
-            required: "Centente é obrigatório",
+            required: "Cedente é obrigatório",
           }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <Autocomplete
@@ -111,7 +108,7 @@ const CreateFarmModal = (props: CreateFarmModalProps) => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  label="Cendentes *"
+                  label="Cedentes *"
                 />
               )}
             />
