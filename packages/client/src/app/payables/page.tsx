@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import { Button, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreatePayableModal from "@/components/CreatePayableModal";
-import AssignorTable from "@/components/AssignorTable";
 import usePayablesData from "@/hooks/usePayablesData";
-import useCreateAssignorMutation from "@/hooks/useCreateAssignorMutation";
+import useCreatePaybleMutation from "@/hooks/useCreatePaybleMutation";
 import { useSearchParams } from "next/navigation";
 import PayableTable from "@/components/PayableTable";
 
@@ -29,11 +28,12 @@ const Dashboard = () => {
     },
   });
 
-  const { mutate } = useCreateAssignorMutation();
+  const { mutate } = useCreatePaybleMutation();
 
   const submit = async ({ value, assignor }: Submit) => {
-    // mutate({ name, document, phone, email });
-    console.log(assignor?.id, value);
+    if (!value || !assignor) return;
+
+    mutate({ value: Number(value), assignorId: assignor?.id });
 
     setOpen(false);
   };
