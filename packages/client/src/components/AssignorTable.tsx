@@ -10,8 +10,7 @@ import Pagination from "@mui/material/Pagination";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Stack } from "@mui/material";
-import { useRouter } from "next/navigation";
-// import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from "next/navigation";
 
 export type RowsType = {
   name: string;
@@ -23,29 +22,24 @@ export type RowsType = {
 type Props = {
   rows: RowsType[];
   totalPages: number;
-  // setOffset: (offset: number) => void;
   loading?: boolean;
 };
 
 const AssignorTable = ({
   totalPages,
-  // setOffset,
   rows,
   loading = false,
 }: Props) => {
   const router = useRouter();
-  
-  // const searchParams = useSearchParams()
 
+  const searchParams = useSearchParams();
+
+  const offset = searchParams.get("offset");
 
   const handleChangePagination = (
     event: React.ChangeEvent<unknown> | null,
     value: number
   ) => {
-    // const params = new URLSearchParams('offset')
-    // params.set('offset', `${value - 1}`)
-
-    // searchParams.set('')
     router.replace(`/assignors?offset=${value - 1}`);
   };
 
@@ -63,7 +57,6 @@ const AssignorTable = ({
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Tipo</TableCell>
                 <TableCell align="left">Nome</TableCell>
                 <TableCell align="left">Email</TableCell>
                 <TableCell align="left">Documento</TableCell>
@@ -95,6 +88,7 @@ const AssignorTable = ({
         <Pagination
           onChange={handleChangePagination}
           count={totalPages}
+          page={Number(offset) + 1}
           shape="rounded"
           color="primary"
         />
