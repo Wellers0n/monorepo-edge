@@ -24,7 +24,7 @@ my skills!
 
 Use node `v18.12.1`
 
-## Initing in the your PC
+## Initiating in the your PC
 
 - For clone the project `git clone https://github.com/Wellers0n/monorepo-edge.git`
 - Enter in the folder `cd monorepo-edge/`
