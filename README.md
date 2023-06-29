@@ -93,6 +93,8 @@ backend port: `http://localhost:3001`
 
 Visit [http://localhost:3001/docs/](http://localhost:3001/api/) for more information about the documentation
 
+ <img src="./swagger.png" />
+
 ## Stack used
 
 [NextJS](https://nextjs.org/)<br/>
