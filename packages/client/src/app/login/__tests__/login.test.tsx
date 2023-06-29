@@ -4,7 +4,7 @@ import Wrapper from "@/test/Wrapper";
 import { rest, server } from "@/test/server";
 import { act } from "react-dom/test-utils";
 
-const url = process.env.BASE_URL || "http://localhost:3333";
+const url = process.env.BASE_URL || "http://localhost:3001";
 
 describe("login", () => {
   it("should render login screen", () => {
@@ -56,6 +56,7 @@ describe("login", () => {
   });
 
   it("should render success message when login", async () => {
+
     server.use(
       rest.post(`${url}/auth/login`, async (req, res, ctx) => {
         return res(
@@ -86,7 +87,7 @@ describe("login", () => {
       fireEvent.click(submitBtn);
     });
 
-    expect(screen.getByText("Login com sucesso!")).toBeInTheDocument();
+    expect(screen.getByText("Logado com sucesso!")).toBeInTheDocument();
   });
 
   it("should render error message when login", async () => {
@@ -119,6 +120,6 @@ describe("login", () => {
       fireEvent.click(submitBtn);
     });
 
-    expect(screen.getByText("Error ao logar")).toBeInTheDocument();
+    expect(screen.getByText("Error ao logar!")).toBeInTheDocument();
   });
 });
