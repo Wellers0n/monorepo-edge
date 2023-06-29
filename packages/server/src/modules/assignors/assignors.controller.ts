@@ -32,7 +32,10 @@ import {
   UpdateAssignorBodyDTO,
   UpdateAssignorParamDTO,
 } from './dtos/update-assignor.dto';
-import { FindAssignorDataDTO } from './dtos/find-assignor.dto';
+import {
+  FindAssignorDataDTO,
+  FindAssignorQueryDTO,
+} from './dtos/find-assignor.dto';
 import { DeleteAssignorParamDTO } from './dtos/delete-assignor.dto';
 
 @Controller('assignors')
@@ -65,9 +68,20 @@ export class AssignorsController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: [AssignorOkResponse] })
   @ApiUnauthorizedResponse({ type: AssignorUnauthorizedResponse })
-  findAll(@Query() query: FindAssignorDataDTO): Promise<AssignorEntity[]> {
-    const { email, name, phone, document } = query;
-    return this.assignorsService.findAll({ email, name, phone, document });
+  findAll(
+    @Query() query: FindAssignorQueryDTO,
+  ): Promise<{ assignors: AssignorEntity[] }> {
+    const { email, name, phone, document, limit = 10, offset = 0 } = query;
+
+    console.log({ limit: Number(limit), offset: Number(offset) });
+    return this.assignorsService.findAll({
+      email,
+      name,
+      phone,
+      document,
+      limit: Number(limit),
+      offset: Number(offset),
+    });
   }
 
   @Get(':id')

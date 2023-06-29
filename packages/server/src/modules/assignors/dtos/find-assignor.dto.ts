@@ -23,6 +23,16 @@ export class FindAssignorQueryDTO {
   @IsOptional()
   @IsNotEmpty()
   document: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsNotEmpty()
+  limit: number;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsNotEmpty()
+  offset: number;
 }
 
 export class FindAssignorDataDTO {
@@ -30,4 +40,6 @@ export class FindAssignorDataDTO {
   name: string;
   phone: string;
   document: string;
+  limit: number;
+  offset: number;
 }

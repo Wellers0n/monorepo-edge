@@ -26,8 +26,17 @@ export class AssignorsService {
   }
 
   async findAll(data: FindAssignorDataDTO) {
-    const { email, name, phone, document } = data;
-    return this.assignorsRepository.findAll({ email, name, phone, document });
+    const { email, name, phone, document, limit, offset } = data;
+
+    console.log({ limit, offset });
+    return this.assignorsRepository.findAll({
+      email,
+      name,
+      phone,
+      document,
+      limit,
+      offset,
+    });
   }
 
   async update(data: UpdateAssignorDataDTO) {

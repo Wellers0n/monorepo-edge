@@ -4,6 +4,7 @@ import { AssignorEntity } from './entities/assignors.entity';
 import { CreateAssignorDataDTO } from './dtos/create-assignor.dto';
 import { FindAssignorDataDTO } from './dtos/find-assignor.dto';
 import { UpdateAssignorDataDTO } from './dtos/update-assignor.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AssignorsRepository {
@@ -34,9 +35,14 @@ export class AssignorsRepository {
     });
   }
 
-  async findAll(data: FindAssignorDataDTO): Promise<AssignorEntity[]> {
-    const { email, name, phone, document } = data;
-    return this.prisma.assignor.findMany({
+  async findAll(
+    data: FindAssignorDataDTO,
+  ): Promise<{ assignors: AssignorEntity[]; totalPages: number }> {
+    const { email, name, phone, document, limit, offset } = data;
+
+    console.log({ limit, offset });
+
+    const query: Prisma.AssignorFindManyArgs = {
       where: {
         email: {
           contains: email,
@@ -51,7 +57,19 @@ export class AssignorsRepository {
           contains: document,
         },
       },
-    });
+      take: limit,
+      skip: limit * offset,
+    };
+
+    const [assignors, count] = await this.prisma.$transaction([
+      this.prisma.assignor.findMany(query),
+      this.prisma.assignor.count({ where: query.where }),
+    ]);
+
+    return {
+      assignors,
+      totalPages: Math.ceil(Number(count) / limit),
+    };
   }
   async findOne(id: number): Promise<AssignorEntity> {
     return this.prisma.assignor.findFirst({
