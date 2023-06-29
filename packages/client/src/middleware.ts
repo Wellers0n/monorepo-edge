@@ -25,5 +25,5 @@ export default async function middleware(request: NextRequest) {
 export const config = {
   runtime: "experimental-edge",
   fallback: false,
-  matcher: ["/assignor/:path*", "/payable/:path*"],
+  matcher: ["/assignors/:path*", "/payables/:path*"],
 };

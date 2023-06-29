@@ -111,17 +111,17 @@ export default function Sidebar({ children, title }: Props) {
         </Toolbar>
         <Divider />
         <List component="nav" sx={{ height: "90vh" }}>
-          <ListItemButton onClick={() => router.push("/assignor")}>
+          <ListItemButton onClick={() => router.push("/assignors")}>
             <ListItemIcon>
               <GroupsIcon />
             </ListItemIcon>
-            <ListItemText primary="Assignors" />
+            <ListItemText primary="Cedentes" />
           </ListItemButton>
-          <ListItemButton onClick={() => router.push("/payable")}>
+          <ListItemButton onClick={() => router.push("/payables")}>
             <ListItemIcon>
               <PaymentIcon />
             </ListItemIcon>
-            <ListItemText primary="Payables" />
+            <ListItemText primary="Recebíveis" />
           </ListItemButton>
         </List>
       </Drawer>
