@@ -40,8 +40,6 @@ export class AssignorsRepository {
   ): Promise<{ assignors: AssignorEntity[]; totalPages: number }> {
     const { email, name, phone, document, limit, offset } = data;
 
-    console.log({ limit, offset });
-
     const query: Prisma.AssignorFindManyArgs = {
       where: {
         email: {

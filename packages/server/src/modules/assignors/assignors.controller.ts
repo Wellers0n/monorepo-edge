@@ -73,7 +73,6 @@ export class AssignorsController {
   ): Promise<{ assignors: AssignorEntity[] }> {
     const { email, name, phone, document, limit = 10, offset = 0 } = query;
 
-    console.log({ limit: Number(limit), offset: Number(offset) });
     return this.assignorsService.findAll({
       email,
       name,
