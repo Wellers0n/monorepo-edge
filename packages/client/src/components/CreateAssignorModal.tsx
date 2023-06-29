@@ -86,7 +86,7 @@ const CreateFarmModal = (props: CreateFarmModalProps) => {
                 shrink: true,
               }}
               fullWidth
-              label={"Email"}
+              label={"Email *"}
             />
           )}
         />
@@ -102,7 +102,7 @@ const CreateFarmModal = (props: CreateFarmModalProps) => {
           }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <PatternFormat
-              label={"Documento"}
+              label={"Documento *"}
               value={value}
               customInput={TextField}
               format="###.###.###-##"
@@ -128,7 +128,7 @@ const CreateFarmModal = (props: CreateFarmModalProps) => {
           }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <PatternFormat
-              label={"Telefone"}
+              label={"Telefone *"}
               value={value}
               customInput={TextField}
               format="(##) # ####-####"

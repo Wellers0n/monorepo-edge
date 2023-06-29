@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CreateAssignorModal from "@/components/CreateAssignorModal";
 import AssignorTable from "@/components/AssignorTable";
 import useAssignorsData from "@/hooks/useAssignorsData";
+import useCreateAssignorMutation from "@/hooks/useCreateAssignorMutation";
 import { useSearchParams } from "next/navigation";
 
 type Submit = {
@@ -26,9 +27,10 @@ const Dashboard = () => {
     },
   });
 
-  const submit = async ({ name, document, email, phone }: Submit) => {
+  const { mutate } = useCreateAssignorMutation();
 
-    console.log({ name, document, phone, email });
+  const submit = async ({ name, document, email, phone }: Submit) => {
+    mutate({ name, document, phone, email });
 
     setOpen(false);
   };
