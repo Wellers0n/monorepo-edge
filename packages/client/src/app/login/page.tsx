@@ -9,7 +9,7 @@ import {
 import { useForm, Controller } from "react-hook-form";
 // import { useRouter } from 'next/navigation'
 import Image from "next/image";
-// import useLoginSessionMutation from '@/hooks/useLoginSessionMutation'
+import useAuthLoginMutation from "@/hooks/useAuthLoginMutation";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import theme from "@/theme";
 import { useRouter } from "next/navigation";
@@ -20,10 +20,10 @@ type Submit = {
 };
 
 const Login = () => {
-  const router = useRouter()
+  const router = useRouter();
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // const { mutate, isLoading } = useLoginSessionMutation()
+  const { mutate, isLoading } = useAuthLoginMutation();
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
@@ -33,10 +33,10 @@ const Login = () => {
   });
 
   const submit = async ({ email, password }: Submit) => {
-    // mutate({
-    //   email,
-    //   password
-    // })
+    mutate({
+      email,
+      password,
+    });
   };
 
   return (
@@ -133,19 +133,18 @@ const Login = () => {
           sx={{ justifyContent: "space-between", alignItems: "center" }} // add space-between when return register button
         >
           <Button
-            fullWidth // remove this when return register button
-            // disabled={isLoading}
+            disabled={isLoading}
             sx={{ height: 40, width: 160 }} // width: 160,
             variant="contained"
             type="submit"
           >
-            {/* {isLoading ? (
+            {isLoading ? (
               <CircularProgress color="primary" size={22} />
-            ) : ( */}
-            Entrar
-            {/* )} */}
+            ) : (
+              "Entrar"
+            )}
           </Button>
-          <Button variant="text" onClick={() => router.push('/register')}>
+          <Button variant="text" onClick={() => router.push("/register")}>
             Cadastrar
           </Button>
         </Stack>
