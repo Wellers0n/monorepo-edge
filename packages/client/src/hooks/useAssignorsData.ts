@@ -24,7 +24,7 @@ const useAssignorsData = (props: Props) => {
   const { params = {} } = props;
 
   const { data, error, isLoading } = useQuery<Response, AxiosError<Error>>(
-    ["farms", params],
+    ["assignors", params],
     () =>
       getAssignors({
         params,
