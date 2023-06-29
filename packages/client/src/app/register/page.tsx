@@ -9,10 +9,8 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import theme from "@/theme";
-// import useRegisterSessionMutation from '@/hooks/useRegisterSessionMutation'
-import { PatternFormat } from "react-number-format";
+import useAuthRegisterMutation from "@/hooks/useAuthRegisterMutation";
 
 import React from "react";
 
@@ -26,7 +24,7 @@ const Register = () => {
   const router = useRouter();
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // const { mutate, isLoading } = useRegisterSessionMutation()
+  const { mutate, isLoading } = useAuthRegisterMutation();
 
   const { handleSubmit, control, watch } = useForm({
     defaultValues: {
@@ -39,14 +37,11 @@ const Register = () => {
 
   const submit = async ({ name, email, password }: Submit) => {
     console.log(name, email, password);
-    // mutate({
-    //   email,
-    //   password,
-    //   name,
-    //   phone: Number(phone),
-    //   companyName,
-    //   roles: ['ADMIN']
-    // })
+    mutate({
+      email,
+      password,
+      name,
+    });
   };
 
   return (
@@ -66,8 +61,7 @@ const Register = () => {
         width={{ lg: "25%", md: "40%", xs: "78%" }}
         onSubmit={handleSubmit(submit)}
       >
-        <Stack mb={5} alignItems={"center"} >
-        
+        <Stack mb={5} alignItems={"center"}>
           <Typography
             color={"primary"}
             variant={mobile ? "h5" : "h4"}
@@ -190,16 +184,16 @@ const Register = () => {
           sx={{ justifyContent: "space-between", alignItems: "center" }}
         >
           <Button
-            // disabled={isLoading}
+            disabled={isLoading}
             sx={{ width: 160, height: 40 }}
             variant="contained"
             type="submit"
           >
-            {/* {isLoading ? (
+            {isLoading ? (
               <CircularProgress color="primary" size={22} />
-            ) : ( */}
-            Cadastrar
-            {/* )} */}
+            ) : (
+              "Cadastrar"
+            )}
           </Button>
           <Button variant="text" onClick={() => router.push("/login")}>
             Entrar

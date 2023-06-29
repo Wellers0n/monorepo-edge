@@ -14,7 +14,7 @@ type Response = {
   message: string;
 };
 
-const postLoginSession = async (props: Props): Promise<Response> => {
+const postAuthLogin = async (props: Props): Promise<Response> => {
   const { data } = props;
 
   const api = Api();
@@ -24,4 +24,4 @@ const postLoginSession = async (props: Props): Promise<Response> => {
   return response.data;
 };
 
-export default postLoginSession;
+export default postAuthLogin;
