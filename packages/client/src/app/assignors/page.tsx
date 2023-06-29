@@ -1,35 +1,23 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
-// import FarmCard from '@/components/FarmCard'
+import { Button, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import AttachmentIcon from "@mui/icons-material/Attachment";
 import CreateAssignorModal from "@/components/CreateAssignorModal";
-// import useInfiniteFarmsData from "@/hooks/useInfiniteFarmsData";
-// import useCreateFarmMutation from "@/hooks/useCreateFarmMutation";
-// import { useInView } from "react-intersection-observer";
 
 type Submit = {
   name: string;
-  description: string;
+  document: string;
+  phone: string;
+  email: string;
 };
 
 const Dashboard = () => {
-  // const { ref, inView } = useInView();
-
   const [open, setOpen] = useState(false);
 
-  const submit = async ({ name, description }: Submit) => {
+  const submit = async ({ name, document, email, phone }: Submit) => {
     // mutate({ name, description })
 
-    console.log({ name, description });
+    console.log({ name, document, phone, email });
 
     setOpen(false);
   };
