@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { enqueueSnackbar } from "notistack";
-import getAssignors from "@/services/getAssignors";
-import { Assignor } from "@/types";
+import getPayables from "@/services/getPayables";
+import { Payables } from "@/types";
 
 type Params = {
   limit?: number;
@@ -14,19 +14,17 @@ type Props = {
 };
 
 type Response = {
-  // limit: number
-  // offset: number
   totalPages: number;
-  assignors: Assignor[];
+  payables: Payables[];
 };
 
-const useAssignorsData = (props: Props) => {
+const usePayablesData = (props: Props) => {
   const { params = {} } = props;
 
   const { data, error, isLoading } = useQuery<Response, AxiosError<Error>>(
-    ["assignors", params],
+    ["payables", params],
     () =>
-      getAssignors({
+      getPayables({
         params,
       }),
     {
@@ -38,7 +36,7 @@ const useAssignorsData = (props: Props) => {
     enqueueSnackbar({
       message:
         error.response?.data?.message ||
-        "Algo deu errado ao buscar os cedentes!",
+        "Algo deu errado ao buscar os recebíveis!",
       variant: "error",
     });
   }
@@ -46,4 +44,4 @@ const useAssignorsData = (props: Props) => {
   return { data, error, isLoading };
 };
 
-export default useAssignorsData;
+export default usePayablesData;
