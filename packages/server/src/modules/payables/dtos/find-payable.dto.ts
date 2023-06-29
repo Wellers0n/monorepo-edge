@@ -15,9 +15,19 @@ export class FindPayableQueryDTO {
   @IsOptional()
   @IsNotEmpty()
   assignorId: number;
+
+  @IsOptional()
+  @IsNotEmpty()
+  limit: number;
+
+  @IsOptional()
+  @IsNotEmpty()
+  offset: number;
 }
 
 export class FindPayableDataDTO {
   emissionDate: Date;
   assignorId: number;
+  limit: number;
+  offset: number;
 }

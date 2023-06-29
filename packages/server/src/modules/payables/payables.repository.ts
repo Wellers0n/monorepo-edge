@@ -5,6 +5,7 @@ import { CreatePayableDataDTO } from './dtos/create-payable.dto';
 import { FindPayableDataDTO } from './dtos/find-payable.dto';
 import { UpdatePayableDataDTO } from './dtos/update-payable.dto';
 import { FindOnePayableDataDTO } from './dtos/find-one-payable.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PayablesRepository {
@@ -28,15 +29,31 @@ export class PayablesRepository {
     });
   }
 
-  async findAll(data: FindPayableDataDTO): Promise<PayableEntity[]> {
-    const { emissionDate, assignorId } = data;
-    return this.prisma.payable.findMany({
+  async findAll(
+    data: FindPayableDataDTO,
+  ): Promise<{ payables: PayableEntity[]; totalPages: number }> {
+    const { emissionDate, assignorId, limit, offset } = data;
+
+    const query: Prisma.PayableFindManyArgs = {
       where: {
         emissionDate,
         assignorId,
       },
-    });
+      take: limit,
+      skip: limit * offset,
+    };
+
+    const [payables, count] = await this.prisma.$transaction([
+      this.prisma.payable.findMany(query),
+      this.prisma.payable.count({ where: query.where }),
+    ]);
+
+    return {
+      payables,
+      totalPages: Math.ceil(Number(count) / limit),
+    };
   }
+
   async findOne(data: FindOnePayableDataDTO): Promise<PayableEntity> {
     const { id } = data;
     return this.prisma.payable.findFirst({
