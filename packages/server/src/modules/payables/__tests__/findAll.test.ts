@@ -70,7 +70,7 @@ describe('Payables (e2e)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(1);
+    expect(response.body.payables).toHaveLength(1);
   });
 
   it('/payables (GET) create a new payable', async () => {
@@ -87,7 +87,7 @@ describe('Payables (e2e)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(2);
+    expect(response.body.payables).toHaveLength(2);
   });
 
   it('/payables (GET) filter payables', async () => {
@@ -105,6 +105,6 @@ describe('Payables (e2e)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(1);
+    expect(response.body.payables).toHaveLength(1);
   });
 });

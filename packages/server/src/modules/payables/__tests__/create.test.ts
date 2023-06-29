@@ -65,11 +65,11 @@ describe('Payables (e2e)', () => {
     expect(response.body.assignorId).toBe(1);
     expect(response.body.userId).toBe(1);
 
-    const responseAllAssignors = await request(app.getHttpServer())
+    const responseAllPayables = await request(app.getHttpServer())
       .get('/payables')
       .set('Authorization', `Bearer ${token}`);
 
-    expect(responseAllAssignors.body).toHaveLength(1);
+    expect(responseAllPayables.body.payables).toHaveLength(1);
   });
 
   it('/payables/create (POST) missing value', async () => {

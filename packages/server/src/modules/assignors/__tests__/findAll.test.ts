@@ -52,7 +52,7 @@ describe('Assignors (e2e)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(1);
+    expect(response.body.assignors).toHaveLength(1);
   });
 
   it('/assignors (GET) create a new assignor', async () => {
@@ -71,6 +71,6 @@ describe('Assignors (e2e)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(2);
+    expect(response.body.assignors).toHaveLength(2);
   });
 });
