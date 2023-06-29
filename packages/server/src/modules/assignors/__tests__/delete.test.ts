@@ -52,7 +52,7 @@ describe('Assignors (e2e)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(1);
+    expect(response.body.assignors).toHaveLength(1);
 
     await request(app.getHttpServer())
       .delete('/assignors/1')
@@ -63,6 +63,6 @@ describe('Assignors (e2e)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(responseAfterDelete.statusCode).toBe(200);
-    expect(responseAfterDelete.body).toHaveLength(0);
+    expect(responseAfterDelete.body.assignors).toHaveLength(0);
   });
 });

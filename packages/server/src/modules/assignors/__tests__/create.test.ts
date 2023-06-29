@@ -62,7 +62,7 @@ describe('Assignors (e2e)', () => {
       .get('/assignors')
       .set('Authorization', `Bearer ${token}`)
 
-      expect(responseAllAssignors.body).toHaveLength(1);
+      expect(responseAllAssignors.body.assignors).toHaveLength(1);
 
   });
 
