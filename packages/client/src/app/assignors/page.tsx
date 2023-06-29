@@ -4,6 +4,8 @@ import { Button, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreateAssignorModal from "@/components/CreateAssignorModal";
 import AssignorTable from "@/components/AssignorTable";
+import useAssignorsData from "@/hooks/useAssignorsData";
+import { useSearchParams } from "next/navigation";
 
 type Submit = {
   name: string;
@@ -13,10 +15,18 @@ type Submit = {
 };
 
 const Dashboard = () => {
+  const searchParams = useSearchParams();
+  const offset = searchParams.get("offset");
+
   const [open, setOpen] = useState(false);
+  const { data, isLoading } = useAssignorsData({
+    params: {
+      limit: 5,
+      offset: Number(offset) || 0,
+    },
+  });
 
   const submit = async ({ name, document, email, phone }: Submit) => {
-    // mutate({ name, description })
 
     console.log({ name, document, phone, email });
 
@@ -34,7 +44,11 @@ const Dashboard = () => {
           Adicionar
         </Button>
         <CreateAssignorModal submit={submit} open={open} setOpen={setOpen} />
-        <AssignorTable rows={[]} totalPages={10} />
+        <AssignorTable
+          rows={data?.assignors || []}
+          totalPages={data?.totalPages || 0}
+          loading={isLoading}
+        />
       </Stack>
     </Stack>
   );
