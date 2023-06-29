@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreateAssignorModal from "@/components/CreateAssignorModal";
+import AssignorTable from "@/components/AssignorTable";
 
 type Submit = {
   name: string;
@@ -33,6 +34,7 @@ const Dashboard = () => {
           Adicionar
         </Button>
         <CreateAssignorModal submit={submit} open={open} setOpen={setOpen} />
+        <AssignorTable rows={[]} totalPages={10} />
       </Stack>
     </Stack>
   );
