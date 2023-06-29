@@ -26,8 +26,13 @@ export class PayablesService {
   }
 
   async findAll(data: FindPayableDataDTO) {
-    const { emissionDate, assignorId } = data;
-    return this.payablesRepository.findAll({ emissionDate, assignorId });
+    const { emissionDate, assignorId, limit, offset } = data;
+    return this.payablesRepository.findAll({
+      emissionDate,
+      assignorId,
+      limit,
+      offset,
+    });
   }
 
   async update(data: UpdatePayableDataDTO) {

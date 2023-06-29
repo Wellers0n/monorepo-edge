@@ -71,12 +71,16 @@ export class PayablesController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: [PayableOkResponse] })
   @ApiUnauthorizedResponse({ type: PayableUnauthorizedResponse })
-  findAll(@Query() query: FindPayableQueryDTO): Promise<PayableEntity[]> {
-    const { emissionDate, assignorId } = query;
+  findAll(
+    @Query() query: FindPayableQueryDTO,
+  ): Promise<{ payables: PayableEntity[]; totalPages: number }> {
+    const { emissionDate, assignorId, limit = 10, offset = 0 } = query;
 
     return this.payablesService.findAll({
       emissionDate,
       assignorId: assignorId ? Number(assignorId) : assignorId,
+      limit: Number(limit),
+      offset: Number(offset),
     });
   }
 
