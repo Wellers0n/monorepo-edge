@@ -1,13 +1,15 @@
 import { enqueueSnackbar } from "notistack";
-import postAuthLogin from "@/services/postAuthLogin";
+import postAuthRegister from "@/services/postAuthRegister";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+
 import Cookies from "js-cookie";
 
 type Data = {
   email: string;
   password: string;
+  name: string;
 };
 
 type Response = {
@@ -19,20 +21,21 @@ type Error = {
   message: string;
 };
 
-const useAuthLoginMutation = () => {
+const useRegisterSessionMutation = () => {
   const router = useRouter();
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: ({ email, password }: Data) =>
-      postAuthLogin({
+    mutationFn: ({ email, password, name }: Data) =>
+      postAuthRegister({
         data: {
           email,
           password,
+          name,
         },
       }),
     onSuccess: (data: Response) => {
       enqueueSnackbar({
-        message: "Logado com sucesso!",
+        message: "Registrado com sucesso!",
         variant: "success",
       });
 
@@ -42,7 +45,7 @@ const useAuthLoginMutation = () => {
     },
     onError: (error: AxiosError<Error>) => {
       return enqueueSnackbar({
-        message: "Error ao logar!",
+        message: "Houve algum erro ao registrar!",
         variant: "error",
       });
     },
@@ -51,4 +54,4 @@ const useAuthLoginMutation = () => {
   return { mutate, isLoading };
 };
 
-export default useAuthLoginMutation;
+export default useRegisterSessionMutation;
