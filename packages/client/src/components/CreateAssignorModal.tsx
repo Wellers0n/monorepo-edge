@@ -1,54 +1,56 @@
-import React from 'react'
-import Modal from '@/components/Modal'
-import { Controller, useForm } from 'react-hook-form'
-import { Button, Stack, TextField } from '@mui/material'
+import React from "react";
+import Modal from "@/components/Modal";
+import { Controller, useForm } from "react-hook-form";
+import {
+  Button,
+  Stack,
+  TextField,
+  AutocompleteRenderInputParams,
+} from "@mui/material";
+import { PatternFormat } from "react-number-format";
 
 type Submit = {
-  name: string
-  description: string
-}
+  name: string;
+  document: string;
+  phone: string;
+  email: string;
+};
 
 type CreateFarmModalProps = {
-  open: boolean
-  setOpen: (value: boolean) => void | boolean
-  submit: (submit: Submit) => Promise<void>
-}
+  open: boolean;
+  setOpen: (value: boolean) => void | boolean;
+  submit: (submit: Submit) => Promise<void>;
+};
 
 const CreateFarmModal = (props: CreateFarmModalProps) => {
-  const { open, setOpen, submit } = props
+  const { open, setOpen, submit } = props;
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
-      name: '',
-      description: ''
-    }
-  })
-
-  // const submit = async ({ name, description }: Submit) => {
-  //   console.log({ name, description })
-  //   // mutate({
-  //   //   email,
-  //   //   password
-  //   // })
-  // }
+      name: "",
+      document: "",
+      email: "",
+      phone: "",
+    },
+  });
 
   return (
-    <Modal title={'Adicionar cedente'} open={open} setOpen={setOpen}>
+    <Modal title={"Adicionar cedente"} open={open} setOpen={setOpen}>
       <Stack
-        component={'form'}
-        display={'flex'}
-        justifyContent={'center'}
-        alignItems={'center'}
+        component={"form"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
         spacing={2}
         onSubmit={handleSubmit((data) => {
-          submit(data)
-          reset()
+          submit(data);
+          reset();
         })}
       >
         <Controller
-          name={'name'}
+          name={"name"}
           control={control}
           rules={{
-            required: 'Nome é obrigatório'
+            required: "Nome é obrigatório",
           }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextField
@@ -57,21 +59,23 @@ const CreateFarmModal = (props: CreateFarmModalProps) => {
               error={!!error}
               helperText={error ? error.message : null}
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               fullWidth
-              label={'Nome *'}
+              label={"Nome *"}
             />
           )}
         />
         <Controller
-          name={'description'}
+          name={"email"}
           control={control}
-          rules={
-            {
-              // required: 'Nome é obrigatório'
-            }
-          }
+          rules={{
+            required: "Email é obrigatório",
+            pattern: {
+              value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+              message: "Digite um email válido",
+            },
+          }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextField
               onChange={onChange}
@@ -79,18 +83,70 @@ const CreateFarmModal = (props: CreateFarmModalProps) => {
               error={!!error}
               helperText={error ? error.message : null}
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               fullWidth
-              label={'Descrição'}
+              label={"Email"}
+            />
+          )}
+        />
+        <Controller
+          name={"document"}
+          control={control}
+          rules={{
+            required: "Documento é obrigatório",
+            minLength: {
+              value: 11,
+              message: "Digite um documento válido",
+            },
+          }}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <PatternFormat
+              label={"Documento"}
+              value={value}
+              customInput={TextField}
+              format="###.###.###-##"
+              fullWidth
+              error={!!error}
+              helperText={error ? error.message : null}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={(value) => onChange(value)}
+            />
+          )}
+        />
+        <Controller
+          name={"phone"}
+          control={control}
+          rules={{
+            required: "Telefone é obrigatório",
+            minLength: {
+              value: 11,
+              message: "Digite um telefone válido",
+            },
+          }}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <PatternFormat
+              label={"Telefone"}
+              value={value}
+              customInput={TextField}
+              format="(##) # ####-####"
+              fullWidth
+              error={!!error}
+              helperText={error ? error.message : null}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={(value) => onChange(value)}
             />
           )}
         />
         <Stack
-          width={'100%'}
+          width={"100%"}
           mt={2}
-          direction={'row'}
-          sx={{ justifyContent: 'space-between', alignItems: 'center' }}
+          direction={"row"}
+          sx={{ justifyContent: "space-between", alignItems: "center" }}
         >
           <Button
             variant="outlined"
@@ -110,7 +166,7 @@ const CreateFarmModal = (props: CreateFarmModalProps) => {
         </Stack>
       </Stack>
     </Modal>
-  )
-}
+  );
+};
 
-export default CreateFarmModal
+export default CreateFarmModal;
