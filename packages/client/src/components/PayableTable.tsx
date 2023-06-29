@@ -9,9 +9,11 @@ import Table from "@mui/material/Table";
 import Pagination from "@mui/material/Pagination";
 import Skeleton from "@mui/material/Skeleton";
 
-import { Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import moment from "moment";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export type RowsType = {
   value: number;
@@ -22,9 +24,17 @@ type Props = {
   rows: RowsType[];
   totalPages: number;
   loading?: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 
-const PayableTable = ({ totalPages, rows, loading = false }: Props) => {
+const PayableTable = ({
+  totalPages,
+  rows,
+  loading = false,
+  onEdit,
+  onDelete,
+}: Props) => {
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -54,6 +64,7 @@ const PayableTable = ({ totalPages, rows, loading = false }: Props) => {
               <TableRow>
                 <TableCell align="left">Valor</TableCell>
                 <TableCell align="left">Data de emissão</TableCell>
+                {onEdit && <TableCell align="right">Ação</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -62,17 +73,38 @@ const PayableTable = ({ totalPages, rows, loading = false }: Props) => {
                   key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell align="left">{row.value}</TableCell>
+                  <TableCell align="left">R$ {row.value}</TableCell>
                   <TableCell align="left">
                     {moment(row.emissionDate).format("DD/MM/YYYY")}
                   </TableCell>
+                  {(onEdit || onDelete) && (
+                    <TableCell align="right">
+                      <Box
+                        display={"flex"}
+                        flexDirection={"row"}
+                        alignItems={"center"}
+                        justifyContent={"flex-end"}
+                      >
+                        {onEdit && (
+                          <Button onClick={onEdit}>
+                            <VisibilityIcon />
+                          </Button>
+                        )}
+                        {onDelete && (
+                          <Button onClick={onDelete}>
+                            <DeleteIcon />
+                          </Button>
+                        )}
+                      </Box>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
           </Table>
           {!rows.length && (
             <Stack alignItems={"center"} padding={5}>
-              <div>Nenhum cedente encontrado</div>
+              <div>Nenhum recebível encontrado</div>
             </Stack>
           )}
         </TableContainer>
@@ -91,4 +123,3 @@ const PayableTable = ({ totalPages, rows, loading = false }: Props) => {
 };
 
 export default PayableTable;
-

@@ -6,7 +6,7 @@ import CreateAssignorModal from "@/components/CreateAssignorModal";
 import AssignorTable from "@/components/AssignorTable";
 import useAssignorsData from "@/hooks/useAssignorsData";
 import useCreateAssignorMutation from "@/hooks/useCreateAssignorMutation";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Submit = {
   name: string;
@@ -17,6 +17,7 @@ type Submit = {
 
 const Dashboard = () => {
   const searchParams = useSearchParams();
+  const router = useRouter()
   const offset = searchParams.get("offset");
 
   const [open, setOpen] = useState(false);
@@ -49,7 +50,8 @@ const Dashboard = () => {
         <AssignorTable
           rows={data?.assignors || []}
           totalPages={data?.totalPages || 0}
-          loading={isLoading}
+          // loading={isLoading}
+          onEdit={(id) => router.push(`assignors/${id}`)}
         />
       </Stack>
     </Stack>

@@ -52,7 +52,7 @@ const Dashboard = () => {
         <PayableTable
           rows={data?.payables || []}
           totalPages={data?.totalPages || 0}
-          loading={isLoading}
+          // loading={isLoading}
         />
       </Stack>
     </Stack>

@@ -7,6 +7,7 @@ import { Payables } from "@/types";
 type Params = {
   limit?: number;
   offset?: number;
+  assignorId?: number;
 };
 
 type Props = {

@@ -8,11 +8,14 @@ import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import Pagination from "@mui/material/Pagination";
 import Skeleton from "@mui/material/Skeleton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-import { Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export type RowsType = {
+  id: number;
   name: string;
   email: string;
   document: string;
@@ -23,12 +26,16 @@ type Props = {
   rows: RowsType[];
   totalPages: number;
   loading?: boolean;
+  onEdit?: (id: number) => void;
+  onDelete?: (id: number) => void;
 };
 
 const AssignorTable = ({
   totalPages,
   rows,
   loading = false,
+  onEdit,
+  onDelete,
 }: Props) => {
   const router = useRouter();
 
@@ -61,6 +68,7 @@ const AssignorTable = ({
                 <TableCell align="left">Email</TableCell>
                 <TableCell align="left">Documento</TableCell>
                 <TableCell align="left">Telefone</TableCell>
+                {onEdit && <TableCell align="right">Ação</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -73,6 +81,27 @@ const AssignorTable = ({
                   <TableCell align="left">{row.email}</TableCell>
                   <TableCell align="left">{row.document}</TableCell>
                   <TableCell align="left">{row.phone}</TableCell>
+                  {(onEdit || onDelete) && (
+                    <TableCell align="right">
+                      <Box
+                        display={"flex"}
+                        flexDirection={"row"}
+                        alignItems={"center"}
+                        justifyContent={"flex-end"}
+                      >
+                        {onEdit && (
+                          <Button onClick={() => onEdit(row.id)}>
+                            <VisibilityIcon />
+                          </Button>
+                        )}
+                        {onDelete && (
+                          <Button onClick={() => onDelete(row?.id)}>
+                            <DeleteIcon />
+                          </Button>
+                        )}
+                      </Box>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
