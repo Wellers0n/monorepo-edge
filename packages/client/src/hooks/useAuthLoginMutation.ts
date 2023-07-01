@@ -38,7 +38,7 @@ const useAuthLoginMutation = () => {
 
       Cookies.set("auth-token", data.access_token);
 
-      router.push("/assignor");
+      router.push("/assignors");
     },
     onError: (error: AxiosError<Error>) => {
       return enqueueSnackbar({

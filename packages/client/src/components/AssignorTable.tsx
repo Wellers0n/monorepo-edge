@@ -128,12 +128,3 @@ const AssignorTable = ({
 
 export default AssignorTable;
 
-// export const Container = styled.div`
-//   width: 95%;
-//   margin-top: 2rem;
-//   margin-bottom: 2rem;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-end;
-//   justify-content: center;
-// `;

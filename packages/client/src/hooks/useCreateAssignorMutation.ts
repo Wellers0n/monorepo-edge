@@ -1,5 +1,5 @@
 import { enqueueSnackbar } from "notistack";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Updater, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { Assignor } from "@/types";
 import postCreateAssignor from "@/services/postCreateAssignor";
@@ -28,17 +28,23 @@ const useCreateAssignorMutation = () => {
           email,
         },
       }),
-    onSuccess: (data: Assignor) => {
+    onSuccess: async (data: Assignor) => {
       enqueueSnackbar({
         message: "Cedente criada com sucesso!",
         variant: "success",
       });
 
-      queryClient.refetchQueries({
-        queryKey: ["assignors"],
-        exact: false,
-        type: "active",
-      });
+      queryClient.setQueriesData(
+        ["assignors"],
+        (
+          oldData: Updater<{ assignors: Assignor[]; totalPages: number }, any>
+        ) => {
+          return {
+            ...oldData,
+            assignors: [...oldData.assignors, data],
+          };
+        }
+      );
     },
     onError: (error: AxiosError<Error>) => {
       return enqueueSnackbar({
