@@ -202,20 +202,10 @@ const Dashboard = ({ params }: Props) => {
         </Stack>
       </Stack>
       <Stack alignItems={{ sm: "flex-end" }} mb={3} mt={5}>
-        {/* <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => setOpen(true)}
-        >
-          Adicionar
-        </Button> */}
         <CreateAssignorModal submit={submit} open={open} setOpen={setOpen} />
         <PayableTable
           rows={data?.payables || []}
           totalPages={data?.totalPages || 0}
-          // loading={isLoading}
-          // onEdit={() => {}}
-          // onDelete={() => {}}
         />
       </Stack>
     </Stack>
