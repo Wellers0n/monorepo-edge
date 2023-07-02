@@ -27,6 +27,7 @@ const Dashboard = ({ params }: Props) => {
   const offset = searchParams.get("offset");
 
   const [open, setOpen] = useState(false);
+
   const { data } = usePayablesData({
     params: {
       limit: 5,
@@ -38,8 +39,6 @@ const Dashboard = ({ params }: Props) => {
   const { data: assignor } = useAssignorData({
     id: Number(params.assignorId),
   });
-
-  // const { mutate } = useCreateAssignorMutation();
 
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
@@ -57,6 +56,7 @@ const Dashboard = ({ params }: Props) => {
   });
 
   const submit = async ({ name, document, email, phone }: Submit) => {
+    console.log({ name, document, email, phone });
     // mutate({ name, document, phone, email });
     // setOpen(false);
   };

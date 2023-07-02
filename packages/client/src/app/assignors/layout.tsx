@@ -1,8 +1,8 @@
 import React from 'react'
 
 export const metadata = {
-  title: 'Assignors',
-  description: 'Assignors'
+  title: 'Cedentes',
+  description: 'Cedentes'
 }
 
 export default function AssignorLayout({
