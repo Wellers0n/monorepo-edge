@@ -21,7 +21,8 @@ const Dashboard = () => {
   const offset = searchParams.get("offset");
 
   const [open, setOpen] = useState(false);
-  const { data, isLoading } = useAssignorsData({
+
+  const { data } = useAssignorsData({
     params: {
       limit: 5,
       offset: Number(offset) || 0,
