@@ -8,7 +8,7 @@ describe('Payables (e2e)', () => {
 
   let token;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();

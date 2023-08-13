@@ -1,29 +1,57 @@
+import type { Config } from '@jest/types';
+import { exec } from 'node:child_process';
+import * as dotenv from 'dotenv';
+import NodeEnvironment from 'jest-environment-node';
 import { Client } from 'pg';
-import { execSync } from 'child_process';
+import * as util from 'node:util';
+import * as crypto from 'node:crypto';
 
-beforeAll(async () => {
-  process.env.DATABASE_URL = process.env.DATABASE_TEST_URL;
-  global.process.env.DATABASE_URL = process.env.DATABASE_TEST_URL;
+dotenv.config({ path: '.env.testing' });
 
-  execSync(
-    `export DATABASE_URL=${process.env.DATABASE_TEST_URL} && npx prisma migrate deploy`,
-    { stdio: 'inherit' },
-  );
-});
+const execSync = util.promisify(exec);
 
-beforeEach(async () => {
-  execSync(
-    `export DATABASE_URL=${process.env.DATABASE_TEST_URL} && npx prisma migrate reset -f`,
-    { stdio: 'inherit' },
-  );
-});
+const prismaBinary = './node_modules/.bin/prisma';
 
-afterAll(async () => {
-  const client = new Client({
-    connectionString: process.env.DATABASE_TEST_URL,
-  });
+export default class PrismaTestEnvironment extends NodeEnvironment {
+  private schema: string;
+  private connectionString: string;
 
-  await client.connect();
-  await client.query(`DROP SCHEMA IF EXISTS "test" CASCADE`);
-  await client.end();
-});
+  constructor(config: Config.ProjectConfig) {
+    // @ts-ignore
+    super(config);
+
+    const dbUser = process.env.DATABASE_USER;
+    const dbPass = process.env.DATABASE_PASS;
+    const dbHost = process.env.DATABASE_HOST;
+    const dbPort = process.env.DATABASE_PORT;
+    const dbName = process.env.DATABASE_NAME;
+    
+    this.schema = `test_${crypto.randomUUID()}`;
+    this.connectionString = `postgresql://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}?schema=${this.schema}`;
+  }
+
+  async setup() {
+    process.env.DATABASE_URL = this.connectionString;
+    this.global.process.env.DATABASE_URL = this.connectionString;
+
+    // await execSync(`sudo chmod 777 ${prismaBinary}`);
+
+
+    await execSync(`${prismaBinary} migrate reset -f`);
+
+    await execSync(`${prismaBinary} migrate deploy`);
+    
+
+    return super.setup();
+  }
+
+  async teardown() {
+    const client = new Client({
+      connectionString: this.connectionString,
+    });
+
+    await client.connect();
+    await client.query(`DROP SCHEMA IF EXISTS "${this.schema}" CASCADE`);
+    await client.end();
+  }
+}
