@@ -1,42 +1,57 @@
+import type { Config } from '@jest/types';
+import { exec } from 'node:child_process';
+import * as dotenv from 'dotenv';
+import NodeEnvironment from 'jest-environment-node';
 import { Client } from 'pg';
-import { execSync } from 'child_process';
-import { Prisma, PrismaClient } from '@prisma/client';
+import * as util from 'node:util';
+import * as crypto from 'node:crypto';
 
-let client
+dotenv.config({ path: '.env.testing' });
 
-beforeAll(async () => {
-  process.env.DATABASE_URL = process.env.DATABASE_TEST_URL;
-  global.process.env.DATABASE_URL = process.env.DATABASE_TEST_URL;
+const execSync = util.promisify(exec);
 
-  execSync(
-    `export DATABASE_URL=${process.env.DATABASE_TEST_URL} && npx prisma migrate deploy`,
-    { stdio: 'inherit' },
-  );
+const prismaBinary = './node_modules/.bin/prisma';
 
-  client = new Client({
-    connectionString: process.env.DATABASE_TEST_URL,
-  });
-  await client.connect();
-});
+export default class PrismaTestEnvironment extends NodeEnvironment {
+  private schema: string;
+  private connectionString: string;
 
-beforeEach(async () => {
-  await client.query(`DROP SCHEMA IF EXISTS "test" CASCADE;`);
-  
-  execSync(
-    `export DATABASE_URL=${process.env.DATABASE_TEST_URL} && npx prisma migrate deploy`,
-    { stdio: 'inherit' },
-  );
-  // await client.query(`CREATE SCHEMA test;`);
+  constructor(config: Config.ProjectConfig) {
+    // @ts-ignore
+    super(config);
 
-  
-});
+    const dbUser = process.env.DATABASE_USER;
+    const dbPass = process.env.DATABASE_PASS;
+    const dbHost = process.env.DATABASE_HOST;
+    const dbPort = process.env.DATABASE_PORT;
+    const dbName = process.env.DATABASE_NAME;
+    
+    this.schema = `test_${crypto.randomUUID()}`;
+    this.connectionString = `postgresql://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}?schema=${this.schema}`;
+  }
 
-afterAll(async () => {
-  // const client = new Client({
-  //   connectionString: process.env.DATABASE_TEST_URL,
-  // });
+  async setup() {
+    process.env.DATABASE_URL = this.connectionString;
+    this.global.process.env.DATABASE_URL = this.connectionString;
 
-  
-  await client.query(`DROP SCHEMA IF EXISTS "test" CASCADE`);
-  await client.end();
-});
+    // await execSync(`sudo chmod 777 ${prismaBinary}`);
+
+
+    await execSync(`${prismaBinary} migrate reset -f`);
+
+    await execSync(`${prismaBinary} migrate deploy`);
+    
+
+    return super.setup();
+  }
+
+  async teardown() {
+    const client = new Client({
+      connectionString: this.connectionString,
+    });
+
+    await client.connect();
+    await client.query(`DROP SCHEMA IF EXISTS "${this.schema}" CASCADE`);
+    await client.end();
+  }
+}
