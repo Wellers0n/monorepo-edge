@@ -1,0 +1,29 @@
+name: Running tests
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: docker/setup-docker@v2
+
+    - name: Build and run PostgreSQL
+      run: |
+        docker-compose up -d
+
+    - name: Run tests
+      run: |
+        yarn test:server && test:client
+
+    - name: Stop PostgreSQL container
+      run: |
+        docker-compose down
