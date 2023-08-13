@@ -25,9 +25,13 @@ jobs:
       run: |
         docker-compose up -d
 
-    - name: Run tests
+    - name: Run tests server
       run: |
-        yarn test:server && test:client
+        yarn test:server
+
+    - name: Run tests client
+      run: |
+        yarn test:client
 
     - name: Stop PostgreSQL container
       run: |
